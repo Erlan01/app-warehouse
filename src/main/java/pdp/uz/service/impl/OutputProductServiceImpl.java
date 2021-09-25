@@ -92,4 +92,9 @@ public class OutputProductServiceImpl implements OutputProductService {
             throw new RuntimeException("Wrong date format is included (User yyyy-mm-dd");
         }
     }
+
+    @Override
+    public List<OutputProduct> getAll() {
+        return outputProductRepo.findAll();
+    }
 }

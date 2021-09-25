@@ -2,6 +2,7 @@ package pdp.uz.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import pdp.uz.entity.OutputProduct;
 import pdp.uz.model.InputProductAddDto;
 import pdp.uz.model.InputProductDto;
 import pdp.uz.model.OutputProductAddDto;
@@ -30,6 +31,11 @@ public class OutputProductController {
     @PostMapping("/add/all")
     public List<OutputProductDto> addAll(@RequestBody List<OutputProductAddDto> dto){
         return outputProductService.addAll(dto);
+    }
+
+    @GetMapping("/get/all")
+    public List<OutputProduct> getAll(){
+        return outputProductService.getAll();
     }
 
     /**

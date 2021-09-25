@@ -11,6 +11,7 @@ import pdp.uz.model.ClientDto;
 import pdp.uz.repository.ClientRepo;
 import pdp.uz.service.ClientService;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -54,5 +55,21 @@ public class ClientServiceImpl implements ClientService {
             throw new RuntimeException("Client id = " + id + ", is inactive!");
         }
         return client;
+    }
+
+    @Override
+    public List<Client> getAll() {
+        List<Client> clients = clientRepo.findAllByActiveTrue();
+        return mapper.toClientDto(clients);
+    }
+
+    @Override
+    public Client get(Long id) {
+        Optional<Client> clientOpt = clientRepo.findById(id);
+        if (!clientOpt.isPresent()){
+            throw new RuntimeException("Client id = " + id + ", not found!");
+        }
+        Client client = clientOpt.get();
+        return mapper.toClient(client);
     }
 }

@@ -74,6 +74,10 @@ public interface MapstructMapper {
 
     ClientDto toClientDto(Client savedClient);
 
+    Client toClient(Client client);
+
+    List<Client> toClientDto(List<Client> clients);
+
     @Mapping(target = "currency", source = "currency.name")
     OutputDto toOutputDto(Output output);
 

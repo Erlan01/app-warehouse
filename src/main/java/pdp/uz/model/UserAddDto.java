@@ -20,5 +20,5 @@ public class UserAddDto implements Serializable {
 
     private List<Long> warehouseIds;
 
-    public Boolean active = false;
+    public Boolean active = true;
 }

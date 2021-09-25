@@ -16,6 +16,7 @@ import pdp.uz.service.SupplierService;
 import pdp.uz.service.WarehouseService;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class InputServiceImpl implements InputService {
@@ -67,5 +68,8 @@ public class InputServiceImpl implements InputService {
         return mapper.toInputDto(savedInput);
     }
 
-
+    @Override
+    public List<Input> getAll() {
+        return inputRepo.findAll();
+    }
 }

@@ -2,6 +2,7 @@ package pdp.uz.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import pdp.uz.entity.Input;
 import pdp.uz.model.InputAddDto;
 import pdp.uz.model.InputDto;
 import pdp.uz.service.InputService;
@@ -23,5 +24,8 @@ public class InputController {
         return inputService.add(dto);
     }
 
-
+    @GetMapping("/getAll")
+    public List<Input> getAll(){
+        return inputService.getAll();
+    }
 }

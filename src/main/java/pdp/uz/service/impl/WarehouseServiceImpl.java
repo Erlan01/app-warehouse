@@ -27,7 +27,7 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     @Override
     public List<WarehouseDto> getList() {
-        List<Warehouse> list = warehouseRepo.findAll();
+        List<Warehouse> list = warehouseRepo.findAllByActiveTrue();
         return mapstructMapper.toWarehouseDto(list);
     }
 
@@ -42,22 +42,11 @@ public class WarehouseServiceImpl implements WarehouseService {
                 throw new RuntimeException("This name is already exist!");
             }
         }
-//        Warehouse warehouse = new Warehouse();
-//        warehouse.setName(name);
-//        warehouse.setActive(dto.isActive());
-
         Warehouse warehouse = mapstructMapper.toWarehouse(dto);
 
         Warehouse savedWarehouse = warehouseRepo.save(warehouse);
 
-//        WarehouseDto warehouseDto = new WarehouseDto();
-//        warehouseDto.setId(savedWarehouse.getId());
-//        warehouseDto.setName(savedWarehouse.getName());
-//        warehouseDto.setActive(savedWarehouse.getActive());
-
-        WarehouseDto warehouseDto = mapstructMapper.toWarehouseDto(savedWarehouse);
-
-        return warehouseDto;
+        return mapstructMapper.toWarehouseDto(savedWarehouse);
     }
 
     @Override

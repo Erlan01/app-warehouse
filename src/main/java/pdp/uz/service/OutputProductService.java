@@ -1,5 +1,6 @@
 package pdp.uz.service;
 
+import pdp.uz.entity.OutputProduct;
 import pdp.uz.model.OutputProductAddDto;
 import pdp.uz.model.OutputProductDto;
 import pdp.uz.model.resp.OutputProductReport;
@@ -15,4 +16,6 @@ public interface OutputProductService {
     OutputProductReport get();
 
     OutputProductReport get(String date);
+
+    List<OutputProduct> getAll();
 }

@@ -13,6 +13,7 @@ import pdp.uz.service.OutputService;
 import pdp.uz.service.WarehouseService;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class OutputServiceImpl implements OutputService {
@@ -63,5 +64,10 @@ public class OutputServiceImpl implements OutputService {
         Output savedOutput = outputRepo.save(output);
 
         return mapper.toOutputDto(savedOutput);
+    }
+
+    @Override
+    public List<Output> get() {
+        return outputRepo.findAll();
     }
 }

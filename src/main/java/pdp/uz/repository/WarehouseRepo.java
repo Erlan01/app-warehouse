@@ -11,9 +11,7 @@ import java.util.Optional;
 @Repository
 public interface WarehouseRepo extends JpaRepository<Warehouse, Long> {
 
-    // select * from warehouse t where t.name = :name
     Optional<Warehouse> findByName(String name);
 
-    @Query(value = "select t from Warehouse t where t.active = true")
-    List<Warehouse> findAll();
+    List<Warehouse> findAllByActiveTrue();
 }
