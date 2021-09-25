@@ -9,6 +9,8 @@ import pdp.uz.helpers.MapstructMapper;
 import pdp.uz.helpers.Utils;
 import pdp.uz.model.InputProductAddDto;
 import pdp.uz.model.InputProductDto;
+import pdp.uz.model.resp.ExpiredProducts;
+import pdp.uz.model.resp.ExpiredProductsFullInfo;
 import pdp.uz.model.resp.ProductReport;
 import pdp.uz.repository.InputProductRepo;
 import pdp.uz.repository.InputRepo;
@@ -95,6 +97,22 @@ public class InputProductServiceImpl implements InputProductService {
         try {
             LocalDate parse = LocalDate.parse(date);
             return inputProductRepo.findAllByDate(parse);
+        } catch (Exception e) {
+            throw new RuntimeException("Wrong date format is included (User yyyy-mm-dd");
+        }
+    }
+
+    @Override
+    public ExpiredProducts getExpiredProducts() {
+        LocalDate today = LocalDate.now();
+        return inputProductRepo.findAllExpiredDate(today);
+    }
+
+    @Override
+    public List<ExpiredProductsFullInfo> getExpiredProductsFullInfo(String date) {
+        try {
+            LocalDate parse = LocalDate.parse(date);
+            return inputProductRepo.findAllExpiredDateFullInfo(parse);
         } catch (Exception e) {
             throw new RuntimeException("Wrong date format is included (User yyyy-mm-dd");
         }

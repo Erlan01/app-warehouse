@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pdp.uz.model.InputProductAddDto;
 import pdp.uz.model.InputProductDto;
+import pdp.uz.model.resp.ExpiredProducts;
+import pdp.uz.model.resp.ExpiredProductsFullInfo;
 import pdp.uz.model.resp.ProductReport;
 import pdp.uz.service.InputProductService;
 
@@ -30,7 +32,6 @@ public class InputProductController {
         return inputProductService.addAll(dto);
     }
 
-    // Dashboard
     @GetMapping("/get/today")
     public List<ProductReport> get() {
         return inputProductService.get();
@@ -39,5 +40,15 @@ public class InputProductController {
     @GetMapping("/get/date")
     public List<ProductReport> get(@RequestParam String date) {
         return inputProductService.get(date);
+    }
+
+    @GetMapping("/get/expiredProducts")
+    public ExpiredProducts getExpiredProducts(){
+        return inputProductService.getExpiredProducts();
+    }
+
+    @GetMapping("/get/expiredProducts/fullInfo")
+    public List<ExpiredProductsFullInfo> getExpiredProductsFullInfo(@RequestParam String date){
+        return inputProductService.getExpiredProductsFullInfo(date);
     }
 }

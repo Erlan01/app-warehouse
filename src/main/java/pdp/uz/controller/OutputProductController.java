@@ -1,14 +1,13 @@
 package pdp.uz.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pdp.uz.model.InputProductAddDto;
 import pdp.uz.model.InputProductDto;
 import pdp.uz.model.OutputProductAddDto;
 import pdp.uz.model.OutputProductDto;
+import pdp.uz.model.resp.OutputProductReport;
+import pdp.uz.model.resp.ProductReport;
 import pdp.uz.service.OutputProductService;
 
 import java.util.List;
@@ -31,5 +30,19 @@ public class OutputProductController {
     @PostMapping("/add/all")
     public List<OutputProductDto> addAll(@RequestBody List<OutputProductAddDto> dto){
         return outputProductService.addAll(dto);
+    }
+
+    /**
+     * Kunlik eng ko’p chiqim qilingan mahsulotlar
+     *
+     */
+    @GetMapping("/get/today")
+    public OutputProductReport get(){
+        return outputProductService.get();
+    }
+
+    @GetMapping("/get/date")
+    public OutputProductReport get(@RequestParam String date){
+        return outputProductService.get(date);
     }
 }

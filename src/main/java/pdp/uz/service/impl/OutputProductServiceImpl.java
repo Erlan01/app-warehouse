@@ -6,11 +6,13 @@ import pdp.uz.helpers.MapstructMapper;
 import pdp.uz.helpers.Utils;
 import pdp.uz.model.OutputProductAddDto;
 import pdp.uz.model.OutputProductDto;
+import pdp.uz.model.resp.OutputProductReport;
 import pdp.uz.repository.OutputProductRepo;
 import pdp.uz.repository.OutputRepo;
 import pdp.uz.service.OutputProductService;
 import pdp.uz.service.ProductService;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -73,5 +75,21 @@ public class OutputProductServiceImpl implements OutputProductService {
         outputProduct.setAmount(amount);
         outputProduct.setPrice(price);
         return outputProductRepo.save(outputProduct);
+    }
+
+    @Override
+    public OutputProductReport get() {
+        LocalDate today = LocalDate.now();
+        return outputProductRepo.findAllByDate(today);
+    }
+
+    @Override
+    public OutputProductReport get(String date) {
+        try {
+            LocalDate parse = LocalDate.parse(date);
+            return outputProductRepo.findAllByDate(parse);
+        } catch (Exception e) {
+            throw new RuntimeException("Wrong date format is included (User yyyy-mm-dd");
+        }
     }
 }
