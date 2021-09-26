@@ -2,6 +2,7 @@ package pdp.uz.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import pdp.uz.entity.Product;
 import pdp.uz.model.ProductAddDto;
 import pdp.uz.model.ProductDto;
 import pdp.uz.service.ProductService;
@@ -42,5 +43,15 @@ public class ProductController {
     @PostMapping("/add")
     private ProductDto add(@RequestBody ProductAddDto dto) {
         return productService.add(dto);
+    }
+
+    @PutMapping("/update/{id}")
+    public Product update(@PathVariable Long id, @RequestBody ProductAddDto dto){
+        return productService.update(id, dto);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public String delete(@PathVariable Long id){
+        return productService.delete(id);
     }
 }

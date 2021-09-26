@@ -20,4 +20,8 @@ public interface ProductService {
     ProductDto add(ProductAddDto dto);
 
     Product validate(Long id);
+
+    Product update(Long id, ProductAddDto dto);
+
+    String delete(Long id);
 }

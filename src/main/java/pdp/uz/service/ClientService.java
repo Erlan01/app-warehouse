@@ -14,4 +14,8 @@ public interface ClientService {
     List<Client> getAll();
 
     Client get(Long id);
+
+    Client update(Long id, ClientAddDto dto);
+
+    String delete(Long id);
 }

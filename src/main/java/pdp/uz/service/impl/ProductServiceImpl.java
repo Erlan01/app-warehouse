@@ -89,6 +89,37 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Product update(Long id, ProductAddDto dto) {
+        String name = dto.getName();
+        if (Utils.isEmpty(name)) {
+            throw new RuntimeException("Product name should not be null!");
+        } else {
+            Optional<Product> productOpt = productRepo.findByName(name);
+            if (productOpt.isPresent()) {
+                throw new RuntimeException("This name is already exist!");
+            }
+        }
+        Category category = categoryService.validate(dto.getCategoryId());
+        Measurement measurement = measurementService.validate(dto.getMeasurementId());
+        Attachment attachment = attachmentService.validate(dto.getAttachmentId());
+
+        Product product = validate(id);
+        product.setAttachment(attachment);
+        product.setCategory(category);
+        product.setMeasurement(measurement);
+        product.setName(dto.getName() != null ? dto.getName() : product.getName());
+
+        return productRepo.save(product);
+    }
+
+    @Override
+    public String delete(Long id) {
+        Product product = validate(id);
+        productRepo.delete(product);
+        return "Product deleted";
+    }
+
+    @Override
     public Product validate(Long id) {
         Optional<Product> productOpt = productRepo.findById(id);
         if (!productOpt.isPresent()) {

@@ -22,4 +22,6 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
     List<Product> findAllByMeasurementId(Long measurementId);
 
     Optional<Product> findByName(String name);
+
+    Optional<Product> findByIdAndActiveTrue(Long id);
 }

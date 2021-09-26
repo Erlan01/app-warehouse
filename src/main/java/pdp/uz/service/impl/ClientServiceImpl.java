@@ -14,6 +14,7 @@ import pdp.uz.service.ClientService;
 import java.util.List;
 import java.util.Optional;
 
+
 @Service
 public class ClientServiceImpl implements ClientService {
     private final ClientRepo clientRepo;
@@ -44,6 +45,47 @@ public class ClientServiceImpl implements ClientService {
         return mapper.toClientDto(savedClient);
     }
 
+
+
+    @Override
+    public List<Client> getAll() {
+        List<Client> clients = clientRepo.findAllByActiveTrue();
+        return mapper.toClientDto(clients);
+    }
+
+    @Override
+    public Client get(Long id) {
+        Client client = validate(id);
+        return mapper.toClient(client);
+    }
+
+    @Override
+    public Client update(Long id, ClientAddDto dto) {
+        String phoneNumber = dto.getPhoneNumber();
+        if (Utils.isEmpty(phoneNumber)) {
+            throw new RuntimeException("Phone number should not be null");
+        }
+        String name = dto.getName();
+        if (Utils.isEmpty(name)) {
+            throw new RuntimeException("Name should not be null");
+        }
+        Optional<Client> optionalClient = clientRepo.findByPhoneNumber(phoneNumber);
+        if (optionalClient.isPresent()) {
+            throw new RuntimeException("Client with this phone number has already existed");
+        }
+        Client client = validate(id);
+        client.setPhoneNumber(phoneNumber);
+        client.setName(name);
+        return clientRepo.save(client);
+    }
+
+    @Override
+    public String delete(Long id) {
+        Client client = validate(id);
+        clientRepo.delete(client);
+        return "Client deleted";
+    }
+
     @Override
     public Client validate(Long id) {
         Optional<Client> optionalClient = clientRepo.findById(id);
@@ -55,21 +97,5 @@ public class ClientServiceImpl implements ClientService {
             throw new RuntimeException("Client id = " + id + ", is inactive!");
         }
         return client;
-    }
-
-    @Override
-    public List<Client> getAll() {
-        List<Client> clients = clientRepo.findAllByActiveTrue();
-        return mapper.toClientDto(clients);
-    }
-
-    @Override
-    public Client get(Long id) {
-        Optional<Client> clientOpt = clientRepo.findById(id);
-        if (!clientOpt.isPresent()){
-            throw new RuntimeException("Client id = " + id + ", not found!");
-        }
-        Client client = clientOpt.get();
-        return mapper.toClient(client);
     }
 }
